@@ -64,3 +64,19 @@ This will start a new game, deal hands to the players, and determine the best ha
 ## Dependencies
 
 This project does not have any external dependencies. It only requires Java 8 or later.
+
+
+## Future Work
+
+1. **Improve the `determineBestHand` method for better performance and results.**
+   Refactor and optimize the `determineBestHand` method to provide more accurate results and enhance its performance.
+
+2. **Add a database for storing game data.**
+   Implement a database for storing game-related data, such as player information, game history, and statistics.
+
+3. **Handle other Okey moves, such as throwing tiles and other gameplay elements.**
+   Implement additional Okey game rules and moves, including throwing tiles, drawing tiles from the center, and more complex gameplay strategies.
+
+4. **Add more tests to ensure the correctness and robustness of the code.**
+   Develop comprehensive test suites to cover various scenarios and edge cases, ensuring the correctness of the implemented features and the overall stability of the application.
+

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="TableServiceTest" tests="4" skipped="0" failures="0" errors="0" timestamp="2023-04-10T14:10:01" hostname="Bugrahans-MacBook-Pro.local" time="0.098">
+  <properties/>
+  <testcase name="testStartGame()" classname="TableServiceTest" time="0.052"/>
+  <testcase name="testGetNumMovesLeftForPairs()" classname="TableServiceTest" time="0.003"/>
+  <testcase name="testGetNumMovesLeftForRuns()" classname="TableServiceTest" time="0.024"/>
+  <testcase name="testGetNumMovesLeftForSets()" classname="TableServiceTest" time="0.009"/>
+  <system-out><![CDATA[
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

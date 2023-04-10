@@ -74,6 +74,25 @@ This will start a new game, deal hands to the players, and determine the best ha
 
 This project does not have any external dependencies. It only requires Java 8 or later.
 
+## Tests
+
+The project contains a series of test cases to ensure the functionality and correctness of the implementation. Below is a summary of the test cases provided:
+
+### TableServiceTest
+
+1. `testGetNumMovesLeftForPairs()`: This test verifies that the `getNumMovesLeftForPairs` method correctly calculates the number of moves left for pairs in a given hand.
+
+2. `testGetNumMovesLeftForSets()`: This test checks that the `getNumMovesLeftForSets` method accurately identifies the sets in a given hand and returns the correct number of sets.
+
+3. `testGetNumMovesLeftForRuns()`: This test ensures that the `getNumMovesLeftForRuns` method correctly identifies the runs in a given hand and returns the appropriate number of runs.
+
+4. `testDetermineBestHand()`: This test verifies that the `determineBestHand` method can correctly identify the player with the best hand, taking into account pairs, sets, and runs.
+
+To run the tests, execute the following command in your terminal:
+
+```bash
+./gradlew test
+```
 
 ## Future Work
 

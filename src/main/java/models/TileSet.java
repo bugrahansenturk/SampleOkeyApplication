@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-class TileSet {
+public class TileSet {
 
     private List<Tile> allTiles;
     private List<Tile> centerTiles;
@@ -24,6 +24,18 @@ class TileSet {
         allTiles.add(new Tile(TileColor.FAKE_OKEY, 0, 52));
         centerTiles.addAll(allTiles);
     }
+    public List<Tile> getAllTiles() {
+        return allTiles;
+    }
+
+    public List<Tile> getCenterTiles() {
+        return centerTiles;
+    }
+
+    public Tile getOkeyTile() {
+        return okeyTile;
+    }
+
 
     public void shuffleTiles() {
         Collections.shuffle(centerTiles);
@@ -75,17 +87,4 @@ class TileSet {
         }
     }
 
-    public List<Tile> getAllTiles() {
-        return allTiles;
-    }
-
-    public List<Tile> getCenterTiles() {
-        return centerTiles;
-    }
-
-    public Tile getOkeyTile() {
-        return okeyTile;
-    }
-
-    // Other necessary methods for TileSet
 }

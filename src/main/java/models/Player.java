@@ -3,7 +3,7 @@ package models;
 import java.util.ArrayList;
 import java.util.List;
 
-class Player {
+public class Player {
     private int id;
     private List<Tile> hand;
     private int points;

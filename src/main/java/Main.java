@@ -1,10 +1,11 @@
 import models.Table;
+import services.TableService;
 
 public class Main {
     public static void main(String[] args) {
-        Table table = new Table();
-        table.startGame();
-        table.determineBestHand();
+        TableService tableService = new TableService();
+        Table table = tableService.startGame();
+        tableService.determineBestHand(table);
     }
 
 }

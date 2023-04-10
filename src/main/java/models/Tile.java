@@ -2,7 +2,7 @@ package models;
 
 import java.util.Comparator;
 
-class Tile {
+public class Tile {
     private TileColor color;
     private int value;
     private int id;

@@ -28,12 +28,19 @@ public class Table {
         }
     }
 
-    public void determineBestHand() {
-        // Implement a method to determine the best hand according to Okey rules.
+    public void determineBestHand() { // implement max-min
         for(Player player : this.players){
-            List<Tile> hand = player.getHand();
-            getNumMovesLeftForSets(hand);
-            getNumMovesLeftForRuns(hand);
+            System.out.println("For player: " + player.getId());
+            for(int i = 0 ; i<3;i++){
+                List<Tile> hand = new ArrayList<>(player.getHand());
+                if (i == 1) {
+                    List<List<Tile>> runs = getNumMovesLeftForRuns(hand);
+                    removeSets(hand,runs);
+                    List<List<Tile>> sets = getNumMovesLeftForSets(hand);
+                    removeSets(hand,sets);
+                    System.out.println("for the "+ i + "'th selection hand size is: " + hand.size());
+                }
+            }
         }
     }
 
@@ -43,6 +50,7 @@ public class Table {
         List<List<Tile>> sets = new ArrayList<>();
         List<Tile> irrelevants = new ArrayList<>();
 
+        List<Tile> okeyTiles = new ArrayList<>(hand.stream().filter(Tile::isOkey).toList());
         for (int i = 1; i <= 13; i++) { // for every number that can be a set search for different colors.
             int number = i;
             List<Tile> setOfNumber = hand.stream().filter(tile -> tile.getValue() == number).toList();
@@ -50,15 +58,16 @@ public class Table {
             setOfNumber = setOfNumber.stream().collect(Collectors.collectingAndThen(Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(Tile::getColor))), ArrayList::new));
             if (setOfNumber.size() > 2) {
                 sets.add(setOfNumber);
+            } else if (setOfNumber.size() == 2 && okeyTiles.size() > 0) {
+                setOfNumber.add(okeyTiles.get(0));
+                okeyTiles.remove(okeyTiles.get(0)); // only use each okeyTiles once.
+                sets.add(setOfNumber);
             }
         }
         sets.add(irrelevants);
-        System.out.println("Sets:");
-        sets.forEach(x -> x.forEach(y-> System.out.print(y.getValue()+",")));
-        System.out.println("");
+        //sets.forEach(x -> x.forEach(y-> System.out.print(y.getValue()+",")));
         return sets;
     }
-
 
     public List<List<Tile>> getNumMovesLeftForRuns(List<Tile> hand){ //1-2-3-4, 12-13-1
         int minSize = 3;
@@ -83,19 +92,66 @@ public class Table {
                     currentSublist = new ArrayList<>();
                     currentSublist.add(coloredTile.get(i));
                 }
-
                 if (i == coloredTile.size() - 1 && currentSublist.size() >= minSize) {
                     runs.add(currentSublist);
                 }
             }
-            // think about fake & real okeys
         }
+
         System.out.println("Runs:");
-        runs.forEach(x -> x.forEach(y-> System.out.print(y.getValue()+" ")));
+        runs.forEach(x -> x.forEach(y-> System.out.print(y.getValue()+",")));
         System.out.println("");
         return runs;
     }
 
+
+    /*
+    public List<List<Tile>> getNumMovesLeftForRuns(List<Tile> hand) {
+        int minSize = 3;
+        List<List<Tile>> runs = new ArrayList<>();
+
+        Map<TileColor, List<Tile>> groupedTiles = hand.stream()
+                .collect(Collectors.groupingBy(Tile::getColor));
+
+        for (List<Tile> coloredTile : groupedTiles.values()) {
+            coloredTile.sort(Comparator.comparing(Tile::getValue));
+        }
+
+        List<Tile> okeyTiles = new ArrayList<>(hand.stream().filter(Tile::isOkey).toList());
+
+        for (List<Tile> coloredTile : groupedTiles.values()) {
+            List<Tile> currentSublist = new ArrayList<>();
+            for (int i = 0; i < coloredTile.size(); i++) {
+                Tile currentTile = coloredTile.get(i);
+                int currentValue = currentTile.getValue();
+                boolean isFirstTile = currentSublist.isEmpty();
+                boolean isConsecutiveValue = !isFirstTile && currentValue == currentSublist.get(currentSublist.size() - 1).getValue() + 1;
+                boolean isWrapAroundValue = !isFirstTile && currentValue == 1 && currentSublist.get(currentSublist.size() - 1).getValue() == 13;
+
+                if (isFirstTile || isConsecutiveValue || isWrapAroundValue) {
+                    System.out.println("Added " + currentValue);
+                    currentSublist.add(currentTile);
+                } else {
+
+                        if (currentSublist.size() >= minSize) {
+                            runs.add(currentSublist);
+                        }
+                        currentSublist = new ArrayList<>();
+                        currentSublist.add(currentTile);
+
+                }
+                if (currentSublist.size() >= minSize) {
+                    runs.add(currentSublist);
+                }
+            }
+        }
+
+        System.out.println("Runs:");
+        runs.forEach(x -> x.forEach(y -> System.out.print(y.getValue() + " ")));
+        System.out.println("");
+        return runs;
+    }
+*/
     public int getNumMovesLeftForPairs(List<Tile> hand) {
         // Create a copy of the hand to avoid modifying the original list.
         List<Tile> tiles = new ArrayList<>(hand);
@@ -120,15 +176,11 @@ public class Table {
         return tiles.size();
     }
 
-
-    Comparator<Tile> tileValueComparator = new Comparator<Tile>() {
-        public int compare(Tile tile1, Tile tile2) {
-            if (tile1.getValue() != tile2.getValue()) {
-                return Integer.compare(tile1.getValue(), tile2.getValue());
-            } else {
-                return Integer.compare(tile1.getColor().ordinal(), tile2.getColor().ordinal());
+    public static void removeSets(List<Tile> mainList, List<List<Tile>> setsToRemove) {
+        for (List<Tile> set : setsToRemove) {
+            for (Tile tile : set) {
+                mainList.remove(tile);
             }
         }
-    };
-
+    }
 }

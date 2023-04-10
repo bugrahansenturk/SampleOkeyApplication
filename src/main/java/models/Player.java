@@ -21,6 +21,9 @@ class Player {
     public List<Tile> getHand() {
         return hand;
     }
+    public int getId() {
+        return id;
+    }
 
     // Other necessary methods for Player
 }

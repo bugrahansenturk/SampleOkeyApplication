@@ -6,11 +6,13 @@ class Tile {
     private TileColor color;
     private int value;
     private int id;
+    private boolean isOkey;
 
     public Tile(TileColor color, int value, int id) {
         this.color = color;
         this.value = value;
         this.id = id;
+        this.isOkey = false;
     }
 
     // Getter and setter methods for Tile
@@ -30,9 +32,6 @@ class Tile {
     public void setValue(int value) {
         this.value = value;
     }
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public boolean equals(Object obj) {
         if (obj == this) {
@@ -48,7 +47,15 @@ class Tile {
     }
     // Other necessary methods for Tile
 
-    // Define a custom Comparator that compares tiles based on their value.
+    public boolean isOkey() {
+        return isOkey;
+    }
 
+    public void setOkey(boolean okey) {
+        isOkey = okey;
+    }
 
+    public void setColor(TileColor color) {
+        this.color = color;
+    }
 }

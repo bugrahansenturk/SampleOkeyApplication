@@ -41,7 +41,7 @@ class TileSet {
         for (Tile tile : allTiles) {
             if (tile.getColor() == indicatorTile.getColor() && tile.getValue() == nextValue) {
                 okeyTile = tile;
-                break;
+                tile.setOkey(true);
             }
         }
 
@@ -50,8 +50,9 @@ class TileSet {
             List<Tile> fakeOkeyTiles = new ArrayList<>(centerTiles.stream().filter(tile1 -> tile1.getColor() == TileColor.FAKE_OKEY).toList());
             for(Tile tile : fakeOkeyTiles){
                 tile.setValue(okeyTile.getValue());
+                tile.setColor(okeyTile.getColor());//set fakeOkey value and color same as okey tile.
             }
-            centerTiles.remove(okeyTileIndex);
+            centerTiles.remove(indicatorIndex); // remove indicator from centerTiles
         }
 
     }

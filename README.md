@@ -6,12 +6,12 @@ This project is a simplified implementation of the popular Turkish game, Okey. T
 
 ### Determining Best Hand
 
-The `testDetermineBestHand()` method is used to determine the best hand among the players.
+The `determineBestHand()` method is used to determine the best hand among the players.
 
 How it works?:
-It checks each player's hand for pairs and non-pairs. The `testGetNumMovesLeftForPairs()` method is responsible for checking the pairs. It removes same-colored identical tiles from the player's hand as pairs, and the remaining number of tiles in the player's hand indicates the number of moves left.
+It checks each player's hand for pairs and non-pairs. The `getNumMovesLeftForPairs()` method is responsible for checking the pairs. It removes same-colored identical tiles from the player's hand as pairs, and the remaining number of tiles in the player's hand indicates the number of moves left.
 
-Subsequently, the `testGetNumMovesLeftForSets()` and `testGetNumMovesLeftForRuns()` methods are executed in order, followed by the `testGetNumMovesLeftForRuns()` and `testGetNumMovesLeftForSets()` methods. These methods return sets and runs as `List<List<Tile>` objects. After each return, the returned elements are removed from the player's hand. This allows for determining which approach is better based on the calculation order by taking the shortest length of the player's hand and printing it on the screen.
+Subsequently, the `getNumMovesLeftForSets()` and `getNumMovesLeftForRuns()` methods are executed in order, followed by the `getNumMovesLeftForRuns()` and `getNumMovesLeftForSets()` methods. These methods return sets and runs as `List<List<Tile>` objects. After each return, the returned elements are removed from the player's hand. This allows for determining which approach is better based on the calculation order by taking the shortest length of the player's hand and printing it on the screen.
 
 ## Classes and Components
 
@@ -85,8 +85,6 @@ The project contains a series of test cases to ensure the functionality and corr
 2. `testGetNumMovesLeftForSets()`: This test checks that the `getNumMovesLeftForSets` method accurately identifies the sets in a given hand and returns the correct number of sets.
 
 3. `testGetNumMovesLeftForRuns()`: This test ensures that the `getNumMovesLeftForRuns` method correctly identifies the runs in a given hand and returns the appropriate number of runs.
-
-4. `testDetermineBestHand()`: This test verifies that the `determineBestHand` method can correctly identify the player with the best hand, taking into account pairs, sets, and runs.
 
 To run the tests, execute the following command in your terminal:
 

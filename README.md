@@ -61,6 +61,6 @@ public class Main {
 
 This will start a new game, deal hands to the players, and determine the best hand according to Okey rules. The result will be displayed in the console.
 
-##Dependencies
+## Dependencies
 
 This project does not have any external dependencies. It only requires Java 8 or later.

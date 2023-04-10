@@ -4,6 +4,15 @@
 
 This project is a simplified implementation of the popular Turkish game, Okey. The game is played by 4 players using numbered tiles with 4 different colors. The goal of this implementation is to determine the player who has the best hand based on Okey rules.
 
+### testDetermineBestHand()
+
+The `testDetermineBestHand()` method is used to determine the best hand among the players.
+
+How it works?:
+It checks each player's hand for pairs and non-pairs. The `testGetNumMovesLeftForPairs()` method is responsible for checking the pairs. It removes same-colored identical tiles from the player's hand as pairs, and the remaining number of tiles in the player's hand indicates the number of moves left.
+
+Subsequently, the `testGetNumMovesLeftForSets()` and `testGetNumMovesLeftForRuns()` methods are executed in order, followed by the `testGetNumMovesLeftForRuns()` and `testGetNumMovesLeftForSets()` methods. These methods return sets and runs as `List<List<Tile>` objects. After each return, the returned elements are removed from the player's hand. This allows for determining which approach is better based on the calculation order by taking the shortest length of the player's hand and printing it on the screen.
+
 ## Classes and Components
 
 ### Tile

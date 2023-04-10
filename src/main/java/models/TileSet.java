@@ -7,6 +7,8 @@ import java.util.Random;
 
 public class TileSet {
 
+    private static final int MAX_PLAYER_COUNT = 4;
+
     private List<Tile> allTiles;
     private List<Tile> centerTiles;
     private Tile okeyTile;

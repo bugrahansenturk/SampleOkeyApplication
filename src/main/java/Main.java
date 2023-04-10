@@ -7,5 +7,4 @@ public class Main {
         Table table = tableService.startGame();
         tableService.determineBestHand(table);
     }
-
 }

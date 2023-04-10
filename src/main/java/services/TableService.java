@@ -13,22 +13,40 @@ public class TableService {
         tileSetService.initTileSet(table);
         return table;
     }
-    public void determineBestHand(Table table) { // implement max-min
+    public void determineBestHand(Table table) {
+        int bestScore = Integer.MAX_VALUE;
+        Player bestPlayer = null;
+
         for(Player player : table.getPlayers()){
-            System.out.println("For player: " + player.getId());
-            for(int i = 0 ; i<3;i++){
-                List<Tile> hand = new ArrayList<>(player.getHand());
-                if (i == 1) {
-                    List<List<Tile>> runs = getNumMovesLeftForRuns(hand);
-                    removeSets(hand,runs);
-                    System.out.println("for the "+ i + "'th selection hand size is: " + hand.size());
-                }
+            List<Tile> hand = new ArrayList<>(player.getHand());
+            int pairsScore = getNumMovesLeftForPairs(hand, table);
+
+            hand = new ArrayList<>(player.getHand()); // reset the hand to calculate other cases.
+            List<List<Tile>> runs = getNumMovesLeftForRuns(hand);
+            removeSets(hand,runs);
+            List<List<Tile>> sets = getNumMovesLeftForSets(hand);
+            removeSets(hand,sets);
+            int runsThenSetsScore = hand.size();
+
+            hand = new ArrayList<>(player.getHand()); // reset the hand to calculate other cases.
+            List<List<Tile>> sets1 = getNumMovesLeftForSets(hand);
+            removeSets(hand,sets1);
+            List<List<Tile>> runs1 = getNumMovesLeftForRuns(hand);
+            removeSets(hand,runs1);
+            int setsThenRunsScore = hand.size();
+
+            int minScoreForNotPairs = Math.min(runsThenSetsScore,setsThenRunsScore);
+            int minScore = Math.min(pairsScore,minScoreForNotPairs);
+
+            System.out.printf("Player %d scores: %d for pairs, %d for non-pairs %n", player.getId(), pairsScore, minScoreForNotPairs);
+            if (minScore < bestScore) {
+                bestScore = minScore;
+                bestPlayer = player;
             }
         }
+        System.out.printf("Best hand belongs to Player %d%n", bestPlayer.getId());
     }
-    // 3-3-3, 4-4-4-4, 2-2-okey, 2-2-fakeOkey, 2-fakeOkey-fakeOkey
     public List<List<Tile>> getNumMovesLeftForSets(List<Tile> hand) {
-
         List<List<Tile>> sets = new ArrayList<>();
         List<Tile> irrelevants = new ArrayList<>();
 
@@ -47,7 +65,22 @@ public class TableService {
             }
         }
         sets.add(irrelevants);
-        //sets.forEach(x -> x.forEach(y-> System.out.print(y.getValue()+",")));
+
+        /**
+        System.out.println("Sets:");
+        for(List<Tile> set : sets){
+            for(Tile tile : set){
+                System.out.print(tile.getValue());
+                if(tile.isOkey()){
+                    System.out.print("(O)");
+                }
+                System.out.print(" ");
+            }
+            System.out.print(",");
+        }
+        System.out.println("");
+        */
+
         return sets;
     }
     public List<List<Tile>> getNumMovesLeftForRuns(List<Tile> hand) { //1-2-3-4, 12-13-1
@@ -69,14 +102,17 @@ public class TableService {
                 Tile currentTile = coloredTile.get(i);
                 int currentValue = currentTile.getValue();
                 boolean isFirstTile = currentSublist.isEmpty();
-                boolean isConsecutiveValue = !isFirstTile && currentValue == currentSublist.get(currentSublist.size() - 1).getValue() + 1;
+                boolean isPreviousTileOkey = !isFirstTile && currentSublist.get(currentSublist.size() - 1).isOkey();
+                boolean isTwoBeforeTileValuePlusTwo = currentSublist.size() > 1 && currentSublist.get(currentSublist.size() - 2).getValue() + 2 == currentValue;
+
+                boolean isConsecutiveValue = !isFirstTile && (currentValue == currentSublist.get(currentSublist.size() - 1).getValue() + 1 || (isPreviousTileOkey && isTwoBeforeTileValuePlusTwo));
                 boolean isWrapAroundValue = !isFirstTile && currentValue == 1 && currentSublist.get(currentSublist.size() - 1).getValue() == 13;
+
 
                 if (isFirstTile || isConsecutiveValue || isWrapAroundValue) {
                     currentSublist.add(coloredTile.get(i));
                 } else {
                     if (okeyTiles.size() > 0 && currentSublist.size() == minSize - 1) {
-                        System.out.println("OKEY ADDED " + okeyTiles.get(0).getValue());
                         currentSublist.add(okeyTiles.get(0));
                         okeyTiles.remove(okeyTiles.get(0)); // only use each okeyTiles once.
                     } else {
@@ -92,7 +128,7 @@ public class TableService {
                 }
             }
         }
-
+        /**
         System.out.println("Runs:");
         for(List<Tile> run : runs){
             for(Tile tile : run){
@@ -102,10 +138,13 @@ public class TableService {
                 }
                 System.out.print(" ");
             }
-            System.out.print(",");
+         System.out.print(",");
         }
+        */
         System.out.println("");
+
         return runs;
+
     }
     public int getNumMovesLeftForPairs(List<Tile> hand,Table table) {
         // Create a copy of the hand to avoid modifying the original list.

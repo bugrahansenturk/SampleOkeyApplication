@@ -15,8 +15,6 @@ public class Tile {
         this.isOkey = false;
     }
 
-    // Getter and setter methods for Tile
-
     public TileColor getColor() {
         return color;
     }

@@ -7,11 +7,9 @@ public enum TileColor {
     YELLOW(0), BLUE(1), BLACK(2), RED(3), FAKE_OKEY(4);
 
     private int value;
-
     TileColor(int value) {
         this.value = value;
     }
-
     public int getValue() {
         return value;
     }

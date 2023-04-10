@@ -4,7 +4,7 @@
 
 This project is a simplified implementation of the popular Turkish game, Okey. The game is played by 4 players using numbered tiles with 4 different colors. The goal of this implementation is to determine the player who has the best hand based on Okey rules.
 
-### testDetermineBestHand()
+### Determining Best Hand
 
 The `testDetermineBestHand()` method is used to determine the best hand among the players.
 
